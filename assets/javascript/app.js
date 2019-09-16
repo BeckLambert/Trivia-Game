@@ -94,9 +94,21 @@ function timerRunning() {
         trivia.timer--;
         if(trivia.timer === 4) {
             $('#timer').addClass('last-seconds');
-        }
-    }
+        } // time is out, increment unanswered
+    } else if (trivia.timer === -1) {
+        trivia.unanswered++;
+        trivia.result = false;
+        clearInterval(trivia.timerId);
+        resultId = setTimeout(trivia.guessResult, 1000);
+        $('#results').html('<h3> Out of time, the answer was: ' + Object.values(trivia.answers) [trivia.currentSet] + '</h3>'); 
+    } else if (trivia.currentSet === Object.keys(trivia.questions).length) {
+        $('#results').html('<h3> You Won! </h3>' + '<p> Correct: ' + trivia.correct + '</p>' + '<p> Incorrect: ' + trivia.incorrect + '</p>' + '<p> Unanswered: ' + trivia.unanswered + '</p>');
+        $('#game').hide();
+        $('#start').show();
+    };
 }
+
+
 
 
 
