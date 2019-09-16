@@ -7,9 +7,8 @@ var trivia = {
     timer: 20,
     timerOn: false,
     timerId: '',
-}
 // trivia questions object
-var questions = {
+ questions: {
     q1: 'Who stole the blue horn for Robin?',
     q2: 'How many slaps are in the slap bet?',
     q3: 'Who left Ted at the alter?',
@@ -20,9 +19,9 @@ var questions = {
     q8: "What was the name of the book Barney based his decisions on?",
     q9: "Whats Teds middle name?",
     q10: "Where did Lily go when she left Marshall for a summer?"
-};
+},
 // question options object/array
-var options = {
+ options: {
     q1: ['Ted', 'Barney', 'Marhsall', 'Lily'],
     q2: ['10', '7', '3', '5'],
     q3: ['Stella', 'Victoria', 'Robin', 'Lily'],
@@ -33,9 +32,9 @@ var options = {
     q8: ['The Bro Code', 'The Playbook', 'The Man Code', 'The Hit Book'],
     q9: ['Christopher', 'Lucas', 'Savage', 'Evelyn'],
     q10: ['Japan', 'San Francisco', 'Italy', 'Miami']
-};
+},
 // correct answers object 
-var answers = {
+ answers: {
     q1: 'Ted',
     q2: '5',
     q3: 'Stella',
@@ -46,7 +45,8 @@ var answers = {
     q8:'The Playbook',
     q9: 'Evelyn',
     q10: 'San Francisco'
-};
+}
+}
 
 $(document).ready(function() {
     $('#remaining-time').hide();
@@ -66,7 +66,7 @@ function startGame() {
     $('#remaining-time').show();
     trivia.nextQuestion()
 };
-
+// function loops through and displays questions and option
 function nextQuestion() {
     trivia.timer = 10;
     $('#timer').removeClass('last-seconds');
@@ -75,4 +75,18 @@ function nextQuestion() {
         trivia.timerId = setInterval(trivia.timerRunning, 1000);
     };
 };
+// grabs all questions and indexes current question
+var questionContent = Object.values(trivia.questions) [trivia.currentSet];
+$('#question').text(questionContent);
+
+//array of user options for current question
+var questionOptions = Object.values(trivia.options) [trivia.currentSet];
+
+//writes options to html
+$.each(questionOptions, function(index, key) {
+    $('#options').append($('<button class option btn btn-info btn-lg>' + key + '</button>'));
+})
+
+
+
     
