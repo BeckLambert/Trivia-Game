@@ -1,5 +1,5 @@
+//Global variables object
 var trivia = {
-    // trivia properties
     correct: 0,
     incorrect: 0,
     unanswered: 0,
@@ -8,7 +8,7 @@ var trivia = {
     timerOn: false,
     timerId: '',
 }
-
+// trivia questions object
 var questions = {
     q1: 'Who stole the blue horn for Robin?',
     q2: 'How many slaps are in the slap bet?',
@@ -21,7 +21,7 @@ var questions = {
     q9: "Whats Teds middle name?",
     q10: "Where did Lily go when she left Marshall for a summer?"
 };
-
+// question options object/array
 var options = {
     q1: ['Ted', 'Barney', 'Marhsall', 'Lily'],
     q2: ['10', '7', '3', '5'],
@@ -34,7 +34,7 @@ var options = {
     q9: ['Christopher', 'Lucas', 'Savage', 'Evelyn'],
     q10: ['Japan', 'San Francisco', 'Italy', 'Miami']
 };
-
+// correct answers object 
 var answers = {
     q1: 'Ted',
     q2: '5',
@@ -46,5 +46,17 @@ var answers = {
     q8:'The Playbook',
     q9: 'Evelyn',
     q10: 'San Francisco'
+};
+
+$(document).ready(function() {
+    $('#remaining-time').hide();
+    $('#start').on('click', trivia.startGame)
+});
+//start game function
+function startGame() {
+    trivia.currentSet = 0;
+    trivia.correct = 0;
+    trivia.incorrect = 0;
+    trivia.unanswered = 0;
 };
     
