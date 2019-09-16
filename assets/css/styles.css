@@ -1,0 +1,12 @@
+body{
+	background-image: url("http://data.whicdn.com/images/127884771/original.jpg");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 550px;
+}
+
+.jumbotron {
+    margin-top: 175px;
+}
