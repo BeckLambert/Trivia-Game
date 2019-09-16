@@ -58,5 +58,21 @@ function startGame() {
     trivia.correct = 0;
     trivia.incorrect = 0;
     trivia.unanswered = 0;
+    clearInterval(trivia.timerId);
+    $('#game').show();
+    $('#results').html('');
+    $('#timer').text(trivia.timer);
+    $('#start').hide();
+    $('#remaining-time').show();
+    trivia.nextQuestion()
+};
+
+function nextQuestion() {
+    trivia.timer = 10;
+    $('#timer').removeClass('last-seconds');
+    $('timer').text(trivia.timer);
+    if(!trivia.timerOn) {
+        trivia.timerId = setInterval(trivia.timerRunning, 1000);
+    };
 };
     
