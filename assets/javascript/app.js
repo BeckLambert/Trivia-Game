@@ -100,12 +100,42 @@ function timerRunning() {
         trivia.result = false;
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 1000);
-        $('#results').html('<h3> Out of time, the answer was: ' + Object.values(trivia.answers) [trivia.currentSet] + '</h3>'); 
+        $('#results').html('<h3> Out of time, Suit Up!: ' + Object.values(trivia.answers) [trivia.currentSet] + '</h3>'); 
     } else if (trivia.currentSet === Object.keys(trivia.questions).length) {
         $('#results').html('<h3> You Won! </h3>' + '<p> Correct: ' + trivia.correct + '</p>' + '<p> Incorrect: ' + trivia.incorrect + '</p>' + '<p> Unanswered: ' + trivia.unanswered + '</p>');
         $('#game').hide();
         $('#start').show();
     };
+}
+
+function guessChecker() {
+    var resultId;
+    var currentAnswer = Object.values(trivia.answers) [trivia.currentSet];
+    if($(this).text() === currentAnswer) {
+        $(this).addClass('btn-success').removeClass('btn-info');
+        
+        trivia.correct++;
+
+        clearInterval(trivia.timerId);
+        resultId = setTimeout(trivia.guessResult, 1000);
+        $('#results').html('<h3> Legen.. wait for it...Dary!</h3>');
+    } else {
+        $(this).addClass('btn-danger').removeClass('btn-info');
+
+        trivia.incorrect++;
+
+        clearInterval(trivia.timerId);
+        resultId = setTimeout(trivia.guessResult, 1000);
+        $('#results').html('<h3> Nothing good happens after 2AM! ' + currentAnswer + '</h3>');
+    }
+}
+
+function results() {
+    trivia.currentSet++;
+
+    $('.option').remove();
+    $('#results h3').remove();
+    trivia.nextQuestion();
 }
 
 
