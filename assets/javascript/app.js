@@ -49,12 +49,13 @@ var trivia = {
 }
 
 $(document).ready(function () {
+    
     $('#remaining-time').show();
-    $('#start').on('click', trivia.startGame)
     $('document').on('click', '.options', trivia.guessChecker);
-
-//start game function
-function startGame() {
+    
+    //start game function
+    $('#start').on('click', function(){
+    $('#start').hide();
     trivia.currentSet = 0;
     trivia.correct = 0;
     trivia.incorrect = 0;
@@ -63,19 +64,21 @@ function startGame() {
     $('#game').show();
     $('#results').html('');
     $('#timer').text(trivia.timer);
-    $('#start').hide();
     $('#remaining-time').show();
-    trivia.nextQuestion()
-};
+    nextQuestion()
+});
 // function loops through and displays questions and option
 function nextQuestion() {
     trivia.timer = 10;
     $('#timer').removeClass('last-seconds');
     $('timer').text(trivia.timer);
     if (!trivia.timerOn) {
-        trivia.timerId = setInterval(trivia.timerRunning, 1000);
+        trivia.timerId = setInterval(timerRunning, 1000);
     };
 };
+
+nextQuestion();
+
 // grabs all questions and indexes current question
 var questionContent = Object.values(trivia.questions)[trivia.currentSet];
 $('#question').text(questionContent);
@@ -112,6 +115,7 @@ function timerRunning() {
         $('#start').show();
     };
 }
+timerRunning()
 
 function guessChecker() {
     var resultId;
@@ -134,6 +138,7 @@ function guessChecker() {
         $('#results').html('<h3> Nothing good happens after 2AM! ' + currentAnswer + '</h3>');
     }
 }
+guessChecker();
 
 function results() {
     trivia.currentSet++;
@@ -142,6 +147,7 @@ function results() {
     $('#results h3').remove();
     trivia.nextQuestion();
 }
+results();
 });
 
 
