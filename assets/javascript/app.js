@@ -88,14 +88,13 @@ var questionOptions = Object.values(trivia.options)[trivia.currentSet];
 
 //writes options to html THIS IS WHERE IM STUCK!
 $.each(questionOptions, function (index, key) {
-    $('#options').prepend($(`<button>` + key + `</button>`)).addClass('answerButtons');
+   var button = $('<button>').addClass('answerButtons').attr('data-value',key).text(key);
+   $('#options').prepend(button);
 })
     $('.answerButtons').on('click', function() {
-    // grab value from clicked button either "key" or data-
-    var guess = $(this).attr('data', 'key');
+    var guess = $(this).attr('data-value');
+    guessChecker(guess);
     console.log(guess);
-    // store in variable
-    // pass variable to guessChecker(variable)
 });
 
 // decrements counter while counting unanswered questions when the timer runs out
@@ -128,8 +127,8 @@ function guessChecker(guess) {
     // check argument "guess" against data structure
     var resultId;
     var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
-    if ($(this).text() === currentAnswer) {
-        $(this).addClass('btn-success').removeClass('btn-info');
+    if ( guess === currentAnswer) {
+        // $(this).addClass('btn-success').removeClass('btn-info');
 
         trivia.correct++;
 
@@ -137,7 +136,7 @@ function guessChecker(guess) {
         resultId = setTimeout(trivia.guessResult, 1000);
         $('#results').html('<h3> Legen.. wait for it...Dary! You Won!</h3>');
     } else {
-        $(this).addClass('btn-danger').removeClass('btn-info');
+        // $(this).addClass('btn-danger').removeClass('btn-info');
 
         trivia.incorrect++;
 
@@ -146,7 +145,7 @@ function guessChecker(guess) {
         $('#results').html('<h3> Nothing good happens after 2AM! You Lost' + currentAnswer + '</h3>');
     }
 }
-// guessChecker();
+
 
 function results() {
     trivia.currentSet++;
@@ -155,7 +154,7 @@ function results() {
     $('#results h3').remove();
     nextQuestion();
 }
-// results();
+
 
 });
 
