@@ -4,7 +4,7 @@ var trivia = {
     incorrect: 0,
     unanswered: 0,
     currentSet: 0,
-    timer: 45,
+    timer: 10,
     timerOn: false,
     timerId: '',
     // trivia questions object
@@ -51,7 +51,7 @@ var trivia = {
 $(document).ready(function () {
     
     $('#remaining-time').show();
-    $('document').on('click', '.options', trivia.guessChecker);
+    $('document').on('click', '.options', guessChecker);
     
     //start game function
     $('#start').on('click', function(){
@@ -77,7 +77,7 @@ function nextQuestion() {
     };
 };
 
-nextQuestion();
+// nextQuestion();
 
 // grabs all questions and indexes current question
 var questionContent = Object.values(trivia.questions)[trivia.currentSet];
@@ -86,10 +86,17 @@ $('#question').text(questionContent);
 //array of user options for current question
 var questionOptions = Object.values(trivia.options)[trivia.currentSet];
 
-//writes options to html
+//writes options to html THIS IS WHERE IM STUCK!
 $.each(questionOptions, function (index, key) {
-    $('#options').append($('<button class option btn btn-info btn-lg>' + key + '</button>'));
+    $('#options').prepend($(`<button>` + key + `</button>`)).addClass('answerButtons');
 })
+    $('.answerButtons').on('click', function() {
+    // grab value from clicked button either "key" or data-
+    var guess = $(this).attr('data', 'key');
+    console.log(guess);
+    // store in variable
+    // pass variable to guessChecker(variable)
+});
 
 // decrements counter while counting unanswered questions when the timer runs out
 function timerRunning() {
@@ -110,14 +117,15 @@ function timerRunning() {
         resultId = setTimeout(trivia.guessResult, 1000);
         $('#results').html('<h3> Out of time, Suit Up!: ' + Object.values(trivia.answers)[trivia.currentSet] + '</h3>'); // all questions have been answered end game and tally correct/incorrect answers 
     } else if (trivia.currentSet === Object.keys(trivia.questions).length) {
-        $('#results').html('<h3> Youve been lawyered! </h3>' + '<p> Correct: ' + trivia.correct + '</p>' + '<p> Incorrect: ' + trivia.incorrect + '</p>' + '<p> Unanswered: ' + trivia.unanswered + '</p>');
+        $('#results').html('<h3> Youve been lawyered! Good job! </h3>' + '<p> Correct: ' + trivia.correct + '</p>' + '<p> Incorrect: ' + trivia.incorrect + '</p>' + '<p> Unanswered: ' + trivia.unanswered + '</p>');
         $('#game').hide();
         $('#start').show();
     };
 }
-timerRunning()
+// timerRunning()
 
-function guessChecker() {
+function guessChecker(guess) {
+    // check argument "guess" against data structure
     var resultId;
     var currentAnswer = Object.values(trivia.answers)[trivia.currentSet];
     if ($(this).text() === currentAnswer) {
@@ -135,19 +143,20 @@ function guessChecker() {
 
         clearInterval(trivia.timerId);
         resultId = setTimeout(trivia.guessResult, 1000);
-        $('#results').html('<h3> Nothing good happens after 2AM! ' + currentAnswer + '</h3>');
+        $('#results').html('<h3> Nothing good happens after 2AM! You Lost' + currentAnswer + '</h3>');
     }
 }
-guessChecker();
+// guessChecker();
 
 function results() {
     trivia.currentSet++;
 
     $('.option').remove();
     $('#results h3').remove();
-    trivia.nextQuestion();
+    nextQuestion();
 }
-results();
+// results();
+
 });
 
 

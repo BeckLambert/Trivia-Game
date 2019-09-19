@@ -9,4 +9,18 @@ body{
 
 .jumbotron {
     margin-top: 175px;
+    opacity: 0.5;
+}
+
+h2, h3 {
+    color: black;
+}
+
+#remaining-time {
+    color: black;
+    font-size: 24px;
+}
+
+#start {
+    background-color: skyblue;
 }
